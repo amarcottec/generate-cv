@@ -7,7 +7,7 @@ const PDFCompTechGlobal = (props) => {
   return (
     <View>
       <Text style={{...commonStyles.title, color: selectedColor, marginTop: 20}}>COMPÉTENCE TECHNIQUES</Text>
-      <Text style={{...commonStyles.text, marginBottom: 10}}>{compTechGlobal}</Text>
+      <Text style={{...commonStyles.text, marginBottom: 10, marginRight: 40}}>{compTechGlobal}</Text>
     </View>
   );
 };

@@ -20,7 +20,7 @@ const ExperiencePDF = (props) => {
         </View>
       ))}
 
-      <Text style={commonStyles.text}>
+      <Text style={{...commonStyles.text, textDecoration: 'underline'}}>
         Environnement technologique: {experience.techEnvironment}
       </Text>
     </View>

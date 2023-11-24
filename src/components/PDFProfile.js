@@ -15,7 +15,7 @@ const PDFProfile = (props) => {
     textTitle: {
       paddingTop: 20,
       paddingBottom: 20,
-      paddingHorizontal: 30,
+      marginLeft: 12,
       fontSize: '20px',
       textAlign: "justify",
       fontFamily: "AntonFamily",

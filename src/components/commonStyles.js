@@ -54,8 +54,9 @@ const commonStyles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
+    marginLeft: 12,
     marginBottom: 10,
-    textAlign: "center",
+    textAlign: "left",
     fontFamily: "AntonFamily",
   },
   titleJob: {

@@ -36,7 +36,6 @@ const PDFFile = (props) => {
     },
     column: {
       width: "50%",
-      padding: 10,
     },
     columnExperience: {
       width: '85%',
@@ -53,12 +52,15 @@ const PDFFile = (props) => {
           phone={data.phone}
           selectedColor={selectedColor}
         />
-        <Text style={styles.header} fixed></Text>
         <View style={styles.columnSection}>
           <View style={styles.column}>
             <PDFProfile
               profile={data.summary}
               selectedColor={selectedColor}
+            />
+              <PDFKnowledge
+              knowledges={knowledges}
+              selectedColor={data.selectedColor}
             />
           </View>
           <View style={styles.column}>
@@ -67,15 +69,6 @@ const PDFFile = (props) => {
               selectedColor={selectedColor}
             />
             <PDFCompTech competences={competences} />
-          </View>
-        </View>
-
-        <View style={styles.columnSection}>
-          <View style={styles.column}>
-            <PDFKnowledge
-              knowledges={knowledges}
-              selectedColor={data.selectedColor}
-            />
           </View>
         </View>
 
