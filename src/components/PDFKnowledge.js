@@ -10,7 +10,7 @@ const PDFKnowledge = (props) => {
       <Text style={{...commonStyles.title, color: selectedColor}}>CONNAISSANCES INFORMATIQUE</Text>
       {knowledges.map((knowledge, index) => (
         <View key={index} style={commonStyles.textParaphaph}>
-          <Text style={commonStyles.text}>{knowledge.knowledgeTitle}:</Text>
+          <Text style={commonStyles.textBold}>{knowledge.knowledgeTitle}:</Text>
           <Text style={commonStyles.text}>{knowledge.KnowledgeList}</Text>
         </View>
       ))}
