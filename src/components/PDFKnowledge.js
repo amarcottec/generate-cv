@@ -11,7 +11,7 @@ const PDFKnowledge = (props) => {
       {knowledges.map((knowledge, index) => (
         <View key={index} style={commonStyles.textParaphaph}>
           <Text style={commonStyles.textBold}>{knowledge.knowledgeTitle}:</Text>
-          <Text style={commonStyles.text}>{knowledge.KnowledgeList}</Text>
+          <Text style={commonStyles.text}>{knowledge.KnowledgeDetail}</Text>
         </View>
       ))}
     </View>

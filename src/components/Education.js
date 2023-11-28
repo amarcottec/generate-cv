@@ -1,86 +1,98 @@
 import React from "react";
 import { useState } from "react";
 
-const Education = ({ sendEducation }) => {
-  const [education, setEducation] = useState({
-    schoolName: "",
-    degreName: "",
-    diplomaName: "",
-    startYear: "",
-    endYear: "",
-    location: "",
-
-  });
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setEducation({
-      ...education,
-      [name]: value,
-    });
-  };
-
-  const addEducation = () => {
-    sendEducation(education);
-    setEducation({
+const Education = ({ sendEducations }) => {
+  const [educations, setEducations] = useState([
+    {
       schoolName: "",
       degreName: "",
       diplomaName: "",
       startYear: "",
       endYear: "",
       location: "",
-    });
+    },
+  ]);
+
+  const handleInputChange = (index, field, value) => {
+    const newEducations = [...educations];
+    newEducations[index][field] = value;
+    setEducations(newEducations);
+    sendEducations(newEducations);
+  };
+
+  const removeEducation = (index) => {
+    const newEducations = [...educations];
+    newEducations.splice(index, 1);
+    setEducations(newEducations);
+    sendEducations(newEducations);
+  }
+
+  const addEducation = () => {
+    setEducations([...educations,
+      {
+        schoolName: "",
+        degreName: "",
+        diplomaName: "",
+        startYear: "",
+        endYear: "",
+        location: "",
+      },
+    ]);
   };
 
   return (
     <div>
       <h2>Education:</h2>
-      <div>
-        <input
-          type="text"
-          name="schoolName"
-          placeholder="School Name:"
-          value={education.schoolName}
-          onChange={handleInputChange}
-        />
-        <input
-          type="text"
-          name="degreName"
-          placeholder="Degree Name:"
-          value={education.degreName}
-          onChange={handleInputChange}
-        />
-        <input
-          type="text"
-          name="diplomaName"
-          placeholder="Diploma Name:"
-          value={education.diplomaName}
-          onChange={handleInputChange}
-        />
-        <input
-          type="text"
-          name="startYear"
-          placeholder="start Year:"
-          value={education.startYear}
-          onChange={handleInputChange}
-        />
-        <input
-          type="text"
-          name="endYear"
-          placeholder="End Year:"
-          value={education.endYear}
-          onChange={handleInputChange}
-        />
-         <input
-          type="text"
-          name="location"
-          placeholder="Location:"
-          value={education.location}
-          onChange={handleInputChange}
-        />
-      </div>
+      {educations.map((education, index) => (
+        <div key={index}>
+          <input
+            type="text"
+            name="schoolName"
+            placeholder="School Name:"
+            value={education.schoolName}
+            onChange={(e) => handleInputChange(index, 'schoolName', e.target.value)}
+          />
+          <input
+            type="text"
+            name="degreName"
+            placeholder="Degree Name:"
+            value={education.degreName}
+            onChange={(e) => handleInputChange(index, 'degreName', e.target.value)}
+          />
+          <input
+            type="text"
+            name="diplomaName"
+            placeholder="Diploma Name:"
+            value={education.diplomaName}
+            onChange={(e) => handleInputChange(index, 'diplomaName', e.target.value)}
+          />
+          <input
+            type="text"
+            name="startYear"
+            placeholder="start Year:"
+            value={education.startYear}
+            onChange={(e) => handleInputChange(index, 'startYear', e.target.value)}
+          />
+          <input
+            type="text"
+            name="endYear"
+            placeholder="End Year:"
+            value={education.endYear}
+            onChange={(e) => handleInputChange(index, 'endYear', e.target.value)}
+          />
+          <input
+            type="text"
+            name="location"
+            placeholder="Location:"
+            value={education.location}
+            onChange={(e) => handleInputChange(index, 'location', e.target.value)}
+          />
+          <button onClick={() => removeEducation(index)}>-</button>
+        </div>
+      ))}
       <button onClick={addEducation}>Add Education</button>
     </div>
+    
   );
 };
 

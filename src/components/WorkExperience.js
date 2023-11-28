@@ -1,22 +1,8 @@
 import React, { useState } from "react";
 
-const WorkExperience = ({ sendExperience }) => {
-  const [experience, setExperience] = useState({
-    jobTitle: "",
-    companyName: "",
-    location: "",
-    startDate: "",
-    endDate: "",
-    tasksDescriptions: [""],
-    techEnvironment: "",
-  });
-
-  const [experiences, setExperiences] = useState([]);
-
-  const addExperience = () => {
-    setExperiences([...experiences, experience]);
-    sendExperience(experience);
-    setExperience({
+const WorkExperience = ({ sendExperiences }) => {
+  const [experiences, setExperiences] = useState([
+    {
       jobTitle: "",
       companyName: "",
       location: "",
@@ -24,99 +10,149 @@ const WorkExperience = ({ sendExperience }) => {
       endDate: "",
       tasksDescriptions: [""],
       techEnvironment: "",
-    });
+    },
+  ]);
+
+  const addExperience = () => {
+    setExperiences([
+      ...experiences,
+      {
+        jobTitle: "",
+        companyName: "",
+        location: "",
+        startDate: "",
+        endDate: "",
+        tasksDescriptions: [""],
+        techEnvironment: "",
+      },
+    ]);
   };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setExperience({
-      ...experience,
-      [name]: value,
-    });
+  const removeExperience = (index) => {
+    const newExperiences = [...experiences];
+    newExperiences.splice(index, 1);
+    setExperiences(newExperiences);
+    sendExperiences(newExperiences);
   };
 
-  const handleTaskChange = (index, value) => {
-    const updatedTasks = [...experience.tasksDescriptions];
-    updatedTasks[index] = value;
-    setExperience({ ...experience, tasksDescriptions: updatedTasks });
+  const handleInputChange = (index, field, value) => {
+    const newExperiences = [...experiences];
+    newExperiences[index][field] = value;
+    setExperiences(newExperiences);
+    sendExperiences(newExperiences);
   };
 
-  const handleAddTask = () => {
-    setExperience({
-      ...experience,
-      tasksDescriptions: [...experience.tasksDescriptions, ""],
-    });
+  const handleTaskChange = (experienceIndex, taskIndex, value) => {
+    const newExperiences = [...experiences];
+    newExperiences[experienceIndex].tasksDescriptions[taskIndex] = value;
+    setExperiences(newExperiences);
+    sendExperiences(newExperiences);
   };
 
-  const handleRemoveTask = (index) => {
-    const updatedTasks = experience.tasksDescriptions.filter(
-      (_, i) => i !== index
-    );
-    setExperience({ ...experience, tasksDescriptions: updatedTasks });
+  const handleAddTask = (experienceIndex, index) => {
+    const newExperiences = [...experiences];
+    newExperiences[experienceIndex].tasksDescriptions.push("");
+    setExperiences(newExperiences);
+    sendExperiences(newExperiences);
+  };
+
+  const handleRemoveTask = (experienceIndex, taskIndex) => {
+    const newExperiences = [...experiences];
+    newExperiences[experienceIndex].tasksDescriptions.splice(taskIndex, 1);
+    setExperiences(newExperiences);
+    sendExperiences(newExperiences);
   };
 
   return (
     <div>
       <h2>Work Experience</h2>
-      <div>
-        <input
-          type="text"
-          name="jobTitle"
-          placeholder="Job Title"
-          value={experience.jobTitle}
-          onChange={handleInputChange}
-        />
-        <input
-          type="text"
-          name="location"
-          placeholder="location"
-          value={experience.location}
-          onChange={handleInputChange}
-        />
-        <input
-          type="text"
-          name="companyName"
-          placeholder="company Name"
-          value={experience.companyName}
-          onChange={handleInputChange}
-        />
-        <input
-          type="text"
-          name="startDate"
-          placeholder="Start Date"
-          value={experience.startDate}
-          onChange={handleInputChange}
-        />
-        <input
-          type="text"
-          name="endDate"
-          placeholder="End Date"
-          value={experience.endDate}
-          onChange={handleInputChange}
-        />
-        <button onClick={handleAddTask}>+</button>
-        {experience.tasksDescriptions.map((task, index) => (
-          <div key={index} style={{display: 'flex', alignItems: 'center'}}>
-            <input
-              type="text"
-              value={task}
-              placeholder="Task Description"
-              onChange={(e) => handleTaskChange(index, e.target.value)}
-            />
-            <button onClick={() => handleRemoveTask(index)}>-</button>
-          </div>
-        ))}
+      {experiences.map((experience, experienceIndex) => (
+        <div key={experienceIndex}>
+          <input
+            type="text"
+            name="jobTitle"
+            placeholder="Job Title"
+            value={experience.jobTitle}
+            onChange={(e) =>
+              handleInputChange(experienceIndex, "jobTitle", e.target.value)
+            }
+          />
+          <input
+            type="text"
+            name="location"
+            placeholder="location"
+            value={experience.location}
+            onChange={(e) =>
+              handleInputChange(experienceIndex, "location", e.target.value)
+            }
+          />
+          <input
+            type="text"
+            name="companyName"
+            placeholder="company Name"
+            value={experience.companyName}
+            onChange={(e) =>
+              handleInputChange(experienceIndex, "companyName", e.target.value)
+            }
+          />
+          <input
+            type="text"
+            name="startDate"
+            placeholder="Start Date"
+            value={experience.startDate}
+            onChange={(e) =>
+              handleInputChange(experienceIndex, "startDate", e.target.value)
+            }
+          />
+          <input
+            type="text"
+            name="endDate"
+            placeholder="End Date"
+            value={experience.endDate}
+            onChange={(e) =>
+              handleInputChange(experienceIndex, "endDate", e.target.value)
+            }
+          />
+          <button onClick={handleAddTask}>+</button>
+          {experience.tasksDescriptions.map((task, taskIndex) => (
+            <div
+              key={taskIndex}
+              style={{ display: "flex", alignItems: "center" }}
+            >
+              <input
+                type="text"
+                value={task}
+                placeholder="Task Description"
+                onChange={(e) =>
+                  handleTaskChange(experienceIndex, taskIndex, e.target.value)
+                }
+              />
+              <button
+                onClick={() => handleRemoveTask(experienceIndex, taskIndex)}
+              >
+                -
+              </button>
+            </div>
+          ))}
 
-        <input
-          type="text"
-          name="techEnvironment"
-          placeholder="technicaL Environment"
-          value={experience.techEnvironment}
-          onChange={handleInputChange}
-        />
+          <input
+            type="text"
+            name="techEnvironment"
+            placeholder="technicaL Environment"
+            value={experience.techEnvironment}
+            onChange={(e) =>
+              handleInputChange(
+                experienceIndex,
+                "techEnvironment",
+                e.target.value
+              )
+            }
+          />
 
-        <button onClick={addExperience}>Add Experience</button>
-      </div>
+          <button onClick={() => removeExperience(experienceIndex)}>-</button>
+        </div>
+      ))}
+      <button onClick={addExperience}>Add Experience</button>
     </div>
   );
 };

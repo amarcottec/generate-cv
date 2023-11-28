@@ -36,22 +36,22 @@ function CVGenerated(props) {
     setglobablInfo({ ...globalInfo, selectedColor: newColor });
   };
 
-  const handleWorkExperience = (experience) => {
+  const handleWorkExperiences = (experiences) => {
 
-    setExperiences([...experiences, experience]);
+    setExperiences(experiences);
   };
 
-  const handleKnowledgeInfo = (knowledge) =>{
-    setKnowledges([...knowledges, knowledge]);
+  const handleKnowledgeList = (knowledgeList) =>{
+    setKnowledges(knowledgeList);
   } 
 
-  const handleCompetence = (comp) =>{
+  const handleCompetenceList = (competenceList) =>{
     
-    setCompetences([...competences, comp]);
+    setCompetences(competenceList);
   } 
 
-   const handleEducation = (educ) =>{
-    setEducations([...educations, educ]);
+   const handleEducations = (educations) =>{
+    setEducations(educations);
    }
 
  
@@ -90,19 +90,19 @@ function CVGenerated(props) {
             onChange={handleChange}
           />
           <div>
-          <CompetenceTech sendCompetence={handleCompetence}/>
+          <CompetenceTech sendCompetences={handleCompetenceList}/>
           </div>
           <div>
-          <KnowledgeInfo sendKnowledgeInfo={handleKnowledgeInfo}/>
+          <KnowledgeInfo sendKnowledgeList={handleKnowledgeList}/>
           </div>
           <div>
             <WorkExperience
-              sendExperience={handleWorkExperience}
+              sendExperiences={handleWorkExperiences}
             ></WorkExperience>
           </div>
           <div>
             <Education
-              sendEducation={handleEducation}
+              sendEducations={handleEducations}
             ></Education>
           </div>
         </div>

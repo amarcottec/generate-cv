@@ -1,54 +1,61 @@
 import React from "react";
 import { useState } from "react";
 
+const KnowledgeInfo = ({ sendKnowledgeList }) => {
+  const [kowledgeList, setKnowledgeList] = useState([
+    { knowledgeTitle: "", KnowledgeDetail: "" },
+  ]);
 
-const KnowledgeInfo = ({ sendKnowledgeInfo }) => {
-  const [knowledgeInfo, setKnowledgeInfo] = useState({
-    knowledgeTitle: "",
-    KnowledgeList: "",
-  });
-
-  const [kowledgeList, setKnowledgeList] = useState([]);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setKnowledgeInfo({
-      ...knowledgeInfo,
-      [name]: value,
-    });
+  const handleAddKnowledge = () => {
+    setKnowledgeList([
+      ...kowledgeList,
+      { knowledgeTitle: "", KnowledgeDetail: "" },
+    ]);
   };
 
-  const addKnowledge = () => {
-    setKnowledgeList([...kowledgeList, knowledgeInfo]);
-    sendKnowledgeInfo(knowledgeInfo);
+  const handleKnowledgeChange = (index, field, value) => {
+    const newKnowledgeList = [...kowledgeList];
+    newKnowledgeList[index][field] = value;
+    setKnowledgeList(newKnowledgeList);
+    sendKnowledgeList(newKnowledgeList);
+  };
 
-    setKnowledgeInfo({
-      knowledgeTitle: "",
-      KnowledgeList: "",
-    });
+  const handleRemoveKnowledge = (index) => {
+    const newKnowledgeList = [...kowledgeList];
+    newKnowledgeList.splice(index, 1);
+    setKnowledgeList(newKnowledgeList);
+    sendKnowledgeList(newKnowledgeList);
   };
 
   return (
     <div>
       <h2>Connaissances Informatique</h2>
 
-      <div>
-        <input
-          type="text"
-          name="knowledgeTitle"
-          placeholder="Knowledge Title"
-          value={knowledgeInfo.knowledgeTitle}
-          onChange={handleInputChange}
-        />
-        <input
-          type="text"
-          name="KnowledgeList"
-          placeholder="Knowledge List"
-          value={knowledgeInfo.KnowledgeList}
-          onChange={handleInputChange}
-        />
-      </div>
-      <button onClick={addKnowledge}>Add Knowledge</button>
+      {kowledgeList &&
+        kowledgeList.map((knowlege, index) => (
+          <div key={index}>
+            <input
+              type="text"
+              name="knowledgeTitle"
+              placeholder="Knowledge Title"
+              value={knowlege.knowledgeTitle}
+              onChange={(e) =>
+                handleKnowledgeChange(index, "knowledgeTitle", e.target.value)
+              }
+            />
+            <input
+              type="text"
+              name="KnowledgeDetail"
+              placeholder="Knowledge Detail"
+              value={knowlege.KnowledgeDetail}
+              onChange={(e) =>
+                handleKnowledgeChange(index, "KnowledgeDetail", e.target.value)
+              }
+            />
+            <button onClick={() => handleRemoveKnowledge(index)}>-</button>
+          </div>
+        ))}
+      <button onClick={handleAddKnowledge}>Add Knowledge</button>
     </div>
   );
 };
