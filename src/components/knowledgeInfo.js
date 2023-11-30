@@ -14,7 +14,9 @@ const KnowledgeInfo = ({ sendKnowledgeList, saveDataTrigger, deleteDataTrigger }
   };
 
   useEffect(() =>{
-    localStorage.setItem("kowledgeList", JSON.stringify(kowledgeList));
+    if (deleteDataTrigger){
+      localStorage.setItem("kowledgeList", JSON.stringify(kowledgeList));
+    } 
   }, [deleteDataTrigger])
 
   useEffect(() =>{

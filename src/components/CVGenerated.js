@@ -27,9 +27,12 @@ function CVGenerated(props) {
   const [educations, setEducations] = useState([]);
 
   useEffect(() =>{
-    localStorage.setItem("globalInfo", JSON.stringify(globalInfo));
+    
+    if(deleteDataTrigger){
+      localStorage.setItem("globalInfo", JSON.stringify(globalInfo));
+    }
   }, [deleteDataTrigger])
-  
+
   useEffect(() => {
     const savedGlobalInfo = localStorage.getItem("globalInfo");
     if (savedGlobalInfo) {

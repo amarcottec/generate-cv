@@ -7,7 +7,10 @@ const CompetenceTech = ({ sendCompetences, deleteDataTrigger, saveDataTrigger })
   ]);
 
   useEffect(() =>{
-    localStorage.setItem("competences", JSON.stringify(competences));
+    if(deleteDataTrigger){
+      localStorage.setItem("competences", JSON.stringify(competences));
+    }
+    
   }, [deleteDataTrigger])
   
 

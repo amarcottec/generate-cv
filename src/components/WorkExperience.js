@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 
-const WorkExperience = ({ sendExperiences, saveDataTrigger, deleteDataTrigger }) => {
+const WorkExperience = ({
+  sendExperiences,
+  saveDataTrigger,
+  deleteDataTrigger,
+}) => {
   const [experiences, setExperiences] = useState([
     {
       jobTitle: "",
@@ -13,16 +17,17 @@ const WorkExperience = ({ sendExperiences, saveDataTrigger, deleteDataTrigger })
     },
   ]);
 
-  useEffect(() =>{
-    localStorage.setItem("experiences", JSON.stringify(experiences));
-  }, [deleteDataTrigger])
-  
   useEffect(() => {
-    
+    if (deleteDataTrigger) {
+      localStorage.setItem("experiences", JSON.stringify(experiences));
+    }
+  }, [deleteDataTrigger]);
+
+  useEffect(() => {
     if (deleteDataTrigger) {
       setExperiences([]);
     }
-    
+
     if (saveDataTrigger) {
       localStorage.setItem("experiences", JSON.stringify(experiences));
     }
@@ -75,7 +80,7 @@ const WorkExperience = ({ sendExperiences, saveDataTrigger, deleteDataTrigger })
     sendExperiences(newExperiences);
   };
 
-  const handleAddTask = (experienceIndex, index) => {
+  const handleAddTask = (experienceIndex) => {
     const newExperiences = [...experiences];
     newExperiences[experienceIndex].tasksDescriptions.push("");
     setExperiences(newExperiences);
@@ -139,7 +144,7 @@ const WorkExperience = ({ sendExperiences, saveDataTrigger, deleteDataTrigger })
               handleInputChange(experienceIndex, "endDate", e.target.value)
             }
           />
-          <button onClick={handleAddTask}>+</button>
+
           {experience.tasksDescriptions.map((task, taskIndex) => (
             <div
               key={taskIndex}
@@ -155,12 +160,10 @@ const WorkExperience = ({ sendExperiences, saveDataTrigger, deleteDataTrigger })
               />
               <button
                 onClick={() => handleRemoveTask(experienceIndex, taskIndex)}
-              >
-                -
-              </button>
+              ></button>
             </div>
           ))}
-
+          <button onClick={() => handleAddTask(experienceIndex)}>+</button>
           <input
             type="text"
             name="techEnvironment"

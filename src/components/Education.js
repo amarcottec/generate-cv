@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
-const Education = ({ sendEducations, saveDataTrigger, deleteDataTrigger  }) => {
+const Education = ({ sendEducations, saveDataTrigger, deleteDataTrigger }) => {
   const [educations, setEducations] = useState([
     {
       schoolName: "",
@@ -13,10 +13,11 @@ const Education = ({ sendEducations, saveDataTrigger, deleteDataTrigger  }) => {
     },
   ]);
 
-  useEffect(() =>{
-    localStorage.setItem("educations", JSON.stringify(educations));
-  }, [deleteDataTrigger])
-  
+  useEffect(() => {
+    if (deleteDataTrigger) {
+      localStorage.setItem("educations", JSON.stringify(educations));
+    }
+  }, [deleteDataTrigger]);
 
   useEffect(() => {
     if (deleteDataTrigger) {
