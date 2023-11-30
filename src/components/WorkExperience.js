@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-const WorkExperience = ({ sendExperiences }) => {
+const WorkExperience = ({ sendExperiences, saveDataTrigger }) => {
   const [experiences, setExperiences] = useState([
     {
       jobTitle: "",
@@ -12,6 +12,23 @@ const WorkExperience = ({ sendExperiences }) => {
       techEnvironment: "",
     },
   ]);
+
+  useEffect(() => {
+    if (saveDataTrigger) {
+      localStorage.setItem("experiences", JSON.stringify(experiences));
+    }
+  }, [saveDataTrigger, experiences]);
+
+  useEffect(() => {
+    const experiencesData = localStorage.getItem("experiences");
+    if (experiencesData) {
+      setExperiences(JSON.parse(experiencesData));
+    }
+  }, []);
+
+  useEffect(() => {
+    sendExperiences(experiences);
+  }, [experiences]);
 
   const addExperience = () => {
     setExperiences([

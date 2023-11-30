@@ -1,10 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 
-const CompetenceTech = ({ sendCompetences }) => {
+const CompetenceTech = ({ sendCompetences, saveDataTrigger }) => {
   const [competences, setCompetences] = useState([
     { compTitle: '', compDescription: '' },
   ]);
+
+  useEffect(() =>{
+
+    if(saveDataTrigger){
+      localStorage.setItem("competences", JSON.stringify(competences));
+    }
+  }, [saveDataTrigger]);
+
+  useEffect(() =>{
+    const competencesData = localStorage.getItem("competences");
+    if (competencesData) {
+      setCompetences(JSON.parse(competencesData));
+    }
+
+  }, [])
+
+  useEffect(() =>{
+    sendCompetences(competences);
+  }, [competences])
+
 
   const handleInputChange = (index, field, value) => {
     const newCompetences = [...competences];

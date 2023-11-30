@@ -1,7 +1,7 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const KnowledgeInfo = ({ sendKnowledgeList }) => {
+const KnowledgeInfo = ({ sendKnowledgeList, saveDataTrigger }) => {
   const [kowledgeList, setKnowledgeList] = useState([
     { knowledgeTitle: "", KnowledgeDetail: "" },
   ]);
@@ -12,6 +12,25 @@ const KnowledgeInfo = ({ sendKnowledgeList }) => {
       { knowledgeTitle: "", KnowledgeDetail: "" },
     ]);
   };
+
+  useEffect(() =>{
+
+    if(saveDataTrigger){
+      localStorage.setItem("kowledgeList", JSON.stringify(kowledgeList));
+    }
+  }, [saveDataTrigger, kowledgeList]);
+
+  useEffect(() =>{
+    const kowledgeListData = localStorage.getItem("kowledgeList");
+    if (kowledgeListData) {
+      setKnowledgeList(JSON.parse(kowledgeListData));
+    }
+
+  }, [])
+
+  useEffect(() =>{
+    sendKnowledgeList(kowledgeList);
+  }, [kowledgeList])
 
   const handleKnowledgeChange = (index, field, value) => {
     const newKnowledgeList = [...kowledgeList];

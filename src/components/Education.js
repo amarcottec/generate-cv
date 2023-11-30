@@ -1,7 +1,7 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const Education = ({ sendEducations }) => {
+const Education = ({ sendEducations, saveDataTrigger }) => {
   const [educations, setEducations] = useState([
     {
       schoolName: "",
@@ -12,6 +12,29 @@ const Education = ({ sendEducations }) => {
       location: "",
     },
   ]);
+
+  useEffect(() =>{
+
+    if(saveDataTrigger){
+      localStorage.setItem("educations", JSON.stringify(educations));
+    }
+  }, [saveDataTrigger, educations]);
+
+  useEffect(() =>{
+    const educationsData = localStorage.getItem("educations");
+    if (educationsData) {
+      setEducations(JSON.parse(educationsData));
+      
+    }
+
+  }, [])
+
+  useEffect(() =>{
+    sendEducations(educations)
+  }, [educations])
+
+
+ 
 
   const handleInputChange = (index, field, value) => {
     const newEducations = [...educations];
