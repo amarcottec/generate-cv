@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const WorkExperience = ({ sendExperiences, saveDataTrigger }) => {
+const WorkExperience = ({ sendExperiences, saveDataTrigger, deleteDataTrigger }) => {
   const [experiences, setExperiences] = useState([
     {
       jobTitle: "",
@@ -13,7 +13,16 @@ const WorkExperience = ({ sendExperiences, saveDataTrigger }) => {
     },
   ]);
 
+  useEffect(() =>{
+    localStorage.setItem("experiences", JSON.stringify(experiences));
+  }, [deleteDataTrigger])
+  
   useEffect(() => {
+    
+    if (deleteDataTrigger) {
+      setExperiences([]);
+    }
+    
     if (saveDataTrigger) {
       localStorage.setItem("experiences", JSON.stringify(experiences));
     }

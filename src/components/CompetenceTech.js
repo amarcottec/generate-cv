@@ -1,12 +1,21 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 
-const CompetenceTech = ({ sendCompetences, saveDataTrigger }) => {
+const CompetenceTech = ({ sendCompetences, deleteDataTrigger, saveDataTrigger }) => {
   const [competences, setCompetences] = useState([
     { compTitle: '', compDescription: '' },
   ]);
 
   useEffect(() =>{
+    localStorage.setItem("competences", JSON.stringify(competences));
+  }, [deleteDataTrigger])
+  
+
+  useEffect(() =>{
+
+    if (deleteDataTrigger) {
+      setCompetences([]);
+    }
 
     if(saveDataTrigger){
       localStorage.setItem("competences", JSON.stringify(competences));

@@ -19,12 +19,17 @@ function CVGenerated(props) {
     selectedColor: "green",
   });
 
+  const [deleteDataTrigger, setDeleteDataTrigger] = useState(false);
   const [saveDataTrigger, setSaveDataTrigger] = useState(false);
   const [experiences, setExperiences] = useState([]);
   const [knowledges, setKnowledges] = useState([]);
   const [competences, setCompetences] = useState([]);
   const [educations, setEducations] = useState([]);
 
+  useEffect(() =>{
+    localStorage.setItem("globalInfo", JSON.stringify(globalInfo));
+  }, [deleteDataTrigger])
+  
   useEffect(() => {
     const savedGlobalInfo = localStorage.getItem("globalInfo");
     if (savedGlobalInfo) {
@@ -34,7 +39,8 @@ function CVGenerated(props) {
 
   useEffect(() => {
     setSaveDataTrigger(false);
-  }, [saveDataTrigger]);
+    setDeleteDataTrigger(false);
+  }, [saveDataTrigger, deleteDataTrigger]);
 
   // Ajoutez d'autres champs de CV ici
 
@@ -69,6 +75,7 @@ function CVGenerated(props) {
   };
 
   const deleteCurrentCv = () => {
+    setDeleteDataTrigger(true);
     setglobablInfo({
       name: "",
       phone: "",
@@ -78,7 +85,7 @@ function CVGenerated(props) {
       selectedColor: "green",
     });
 
-    localStorage.setItem("globalInfo", JSON.stringify(globalInfo));
+   
   };
 
   return (
@@ -128,24 +135,28 @@ function CVGenerated(props) {
             <CompetenceTech
               sendCompetences={handleCompetenceList}
               saveDataTrigger={saveDataTrigger}
+              deleteDataTrigger={deleteDataTrigger}
             />
           </div>
           <div>
             <KnowledgeInfo
               sendKnowledgeList={handleKnowledgeList}
               saveDataTrigger={saveDataTrigger}
+              deleteDataTrigger={deleteDataTrigger}
             />
           </div>
           <div>
             <WorkExperience
               sendExperiences={handleWorkExperiences}
               saveDataTrigger={saveDataTrigger}
+              deleteDataTrigger={deleteDataTrigger}
             ></WorkExperience>
           </div>
           <div>
             <Education
               sendEducations={handleEducations}
               saveDataTrigger={saveDataTrigger}
+              deleteDataTrigger={deleteDataTrigger}
             ></Education>
           </div>
         </div>
